@@ -292,7 +292,7 @@
   },
   "CONTACTS_LAYOUT": {
     "HEADER": {
-      "TITLE": "Contatos",
+      "TITLE": "Ficha do Cliente",
       "SEARCH_TITLE": "Pesquisar contatos",
       "ACTIVE_TITLE": "Contatos ativos",
       "SEARCH_PLACEHOLDER": "Pesquisar...",

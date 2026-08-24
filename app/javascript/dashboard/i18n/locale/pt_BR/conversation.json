@@ -346,7 +346,7 @@
       }
     },
     "SIDEBAR": {
-      "CONTACT": "Contatos",
+      "CONTACT": "Ficha do Cliente",
       "COPILOT": "Copiloto"
     },
     "VOICE_WIDGET": {
@@ -420,11 +420,11 @@
     },
     "ACCORDION": {
       "CONTACT_DETAILS": "Detalhes do contato",
-      "CONVERSATION_ACTIONS": "Ações da conversa",
+      "CONVERSATION_ACTIONS": "Gestão do Atendimento",
       "CONVERSATION_LABELS": "Etiquetas da conversa",
       "CONVERSATION_INFO": "Informação da conversa",
       "CONTACT_NOTES": "Notas do contato",
-      "CONTACT_ATTRIBUTES": "Atributos do contato",
+      "CONTACT_ATTRIBUTES": "Perfil de Busca",
       "PREVIOUS_CONVERSATION": "Conversas anteriores",
       "MACROS": "Macros",
       "LINEAR_ISSUES": "Problemas do Linear vinculados",

@@ -42,7 +42,7 @@ export class Login {
   }
 
   getLoginHeading() {
-    return this.page.getByRole('heading', { name: 'Login to Chatwoot' });
+    return this.page.getByRole('heading', { name: 'Acessar a ImoBIA' });
   }
 
   getSSOLink() {
@@ -50,6 +50,6 @@ export class Login {
   }
 
   getForgotPasswordLink() {
-    return this.page.getByRole('link', { name: 'Forgot your password?' });
+    return this.page.getByRole('link', { name: 'Esqueceu sua senha?' });
   }
 }

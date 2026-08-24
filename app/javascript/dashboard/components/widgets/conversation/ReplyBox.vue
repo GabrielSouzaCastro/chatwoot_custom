@@ -1572,7 +1572,9 @@ export default {
   @apply relative mb-2 mx-2 border border-n-weak rounded-xl bg-n-solid-1;
 
   &.is-private {
-    @apply bg-n-solid-amber dark:border-n-amber-3/10 border-n-amber-12/5;
+    background-color: #fdf8e3 !important;
+    border-color: #ebb90d !important;
+    @apply dark:bg-n-solid-3 dark:border-n-amber-3/10;
   }
 }
 

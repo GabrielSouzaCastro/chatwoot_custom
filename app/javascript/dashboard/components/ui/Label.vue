@@ -1,6 +1,50 @@
 <script>
 import { getContrastingTextColor } from '@chatwoot/utils';
 
+const PORTAL_DOMAINS = {
+  vivareal: 'vivareal.com.br',
+  zap: 'zapimoveis.com.br',
+  zapimoveis: 'zapimoveis.com.br',
+  'zap-imoveis': 'zapimoveis.com.br',
+  imovelweb: 'imovelweb.com.br',
+  chavesnamao: 'chavesnamao.com.br',
+  'chaves-na-mao': 'chavesnamao.com.br',
+  quintoandar: 'quintoandar.com.br',
+  olx: 'olx.com.br',
+  mercadolivre: 'mercadolivre.com.br',
+  wimoveis: 'wimoveis.com.br',
+  trafego: 'meta.com',
+  whatsapp: 'whatsapp.com',
+  casamineira: 'casamineira.com.br',
+  'casa-mineira': 'casamineira.com.br',
+  dfimoveis: 'dfimoveis.com.br',
+  lugarcerto: 'lugarcerto.com.br',
+  agenteimovel: 'agenteimovel.com.br',
+  dreamcasa: 'dreamcasa.com.br',
+  '123i': '123i.com.br',
+  moving: 'moving.com.br',
+  kenlo: 'kenlo.com.br',
+  ingaia: 'ingaia.com.br',
+  vista: 'vistasoft.com.br',
+  universal: 'universalsoftware.com.br',
+  imoview: 'imoview.com.br',
+  facilita: 'appfacilita.com',
+  arbo: 'arboimoveis.com.br',
+  rdstation: 'rdstation.com',
+  instagram: 'instagram.com',
+  google: 'google.com',
+  googleads: 'ads.google.com',
+  tiktok: 'tiktok.com',
+  youtube: 'youtube.com',
+  linkedin: 'linkedin.com',
+};
+
+const getPortalDomain = title => {
+  if (!title) return null;
+  const key = title.toLowerCase().trim();
+  return PORTAL_DOMAINS[key] || null;
+};
+
 export default {
   props: {
     title: {
@@ -46,6 +90,15 @@ export default {
   },
   emits: ['remove'],
   computed: {
+    portalDomain() {
+      return getPortalDomain(this.title);
+    },
+    computedIcon() {
+      if (this.title && this.title.toLowerCase().trim() === 'site') {
+        return 'globe';
+      }
+      return this.icon;
+    },
     textColor() {
       if (this.variant === 'smooth') return '';
       if (this.variant === 'dashed') return '';
@@ -86,13 +139,22 @@ export default {
     class="inline-flex ltr:mr-1 rtl:ml-1 mb-1"
     :class="labelClass"
     :style="labelStyle"
-    :title="description"
+    :title="description || title"
   >
-    <span v-if="icon" class="label-action--button">
-      <fluent-icon :icon="icon" size="12" class="label--icon cursor-pointer" />
+    <img
+      v-if="portalDomain"
+      :src="`https://www.google.com/s2/favicons?domain=${portalDomain}&sz=64`"
+      class="size-3.5 rounded-sm object-contain"
+    />
+    <span v-else-if="computedIcon" class="label-action--button">
+      <fluent-icon
+        :icon="computedIcon"
+        size="12"
+        class="label--icon cursor-pointer"
+      />
     </span>
     <span
-      v-if="['smooth', 'dashed'].includes(variant) && title && !icon"
+      v-else-if="['smooth', 'dashed'].includes(variant) && title"
       :style="{ background: color }"
       class="label-color-dot flex-shrink-0"
     />

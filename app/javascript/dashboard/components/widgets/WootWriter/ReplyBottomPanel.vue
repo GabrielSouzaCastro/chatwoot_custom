@@ -331,7 +331,7 @@ export default {
         @click="toggleAudioRecorderPlayPause"
       />
       <NextButton
-        v-if="showMessageSignatureButton"
+        v-if="false"
         v-tooltip.top-end="signatureToggleTooltip"
         icon="i-ph-signature"
         slate

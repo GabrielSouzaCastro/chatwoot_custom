@@ -32,7 +32,7 @@ test.describe('Login page', () => {
     const passwordInput = loginComponent.getPasswordInput();
     await expect(passwordInput).toBeVisible();
     await expect(passwordInput).toHaveAttribute('type', 'password');
-    await expect(page.getByText('PasswordForgot your password?')).toBeVisible();
+    await expect(page.getByText('PasswordEsqueceu sua senha?')).toBeVisible();
 
     const togglePasswordButton = page.getByRole('button', {
       name: 'Show password',

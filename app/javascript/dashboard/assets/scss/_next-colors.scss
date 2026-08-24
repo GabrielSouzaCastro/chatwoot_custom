@@ -306,3 +306,39 @@
   }
 }
 // NEXT COLORS END
+
+// Sidebar brand override — dark sidebar with brand color
+.sidebar-brand {
+  --background-color: 8 30 44; // #081e2c
+  --surface-1: 14 55 74; // #0e374a
+  --surface-2: 14 55 74;
+  --surface-active: 26 69 96; // #1a4560
+  --border-weak: 26 69 96;
+  --border-strong: 26 69 96;
+  --border-container: 26 69 96;
+  --card-color: 14 55 74;
+  --solid-1: 14 55 74;
+  --solid-2: 14 55 74;
+  --solid-3: 14 55 74;
+  --solid-active: 26 69 96;
+  --button-color: 14 55 74;
+  --label-background: 14 55 74;
+  --label-border: 255, 255, 255, 0.08;
+  --alpha-1: 255, 255, 255, 0.08;
+  --alpha-2: 255, 255, 255, 0.12;
+  --alpha-3: 8, 30, 44, 0.95;
+  --black-alpha-1: 255, 255, 255, 0.08;
+  --black-alpha-2: 255, 255, 255, 0.04;
+
+  --slate-1: 8 30 44;
+  --slate-2: 14 55 74;
+  --slate-3: 26 69 96;
+  --slate-4: 31 109 145;
+  --slate-5: 31 109 145;
+  --slate-7: 77 147 181;
+  --slate-8: 143 167 185;
+  --slate-9: 173 192 206;
+  --slate-10: 191 205 217;
+  --slate-11: 220 228 235;
+  --slate-12: 255 255 255;
+}

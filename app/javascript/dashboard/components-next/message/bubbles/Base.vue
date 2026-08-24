@@ -32,24 +32,32 @@ const isCaptainMessage = computed(
     (sender.value?.type ?? senderType.value) === SENDER_TYPES.CAPTAIN_ASSISTANT
 );
 
-const metaColorClass = computed(() =>
-  variant.value === MESSAGE_VARIANTS.PRIVATE
-    ? 'text-n-amber-12/50'
-    : 'text-n-slate-11'
-);
+const metaColorClass = computed(() => {
+  if (variant.value === MESSAGE_VARIANTS.PRIVATE) return 'text-slate-900/70';
+  if (
+    [
+      MESSAGE_VARIANTS.AGENT,
+      MESSAGE_VARIANTS.BOT,
+      MESSAGE_VARIANTS.TEMPLATE,
+    ].includes(variant.value)
+  )
+    return 'text-white/70';
+  return 'text-n-slate-11';
+});
 
 const emailMetaClass = computed(() =>
   variant.value === MESSAGE_VARIANTS.EMAIL ? 'px-3 pb-3' : ''
 );
 
 const varaintBaseMap = {
-  [MESSAGE_VARIANTS.AGENT]: 'bg-n-solid-blue text-n-slate-12',
+  [MESSAGE_VARIANTS.AGENT]: '!bg-[#081e2c] !text-white shadow-sm',
   [MESSAGE_VARIANTS.PRIVATE]:
-    'bg-n-solid-amber text-n-amber-12 [&_.prosemirror-mention-node]:font-semibold',
-  [MESSAGE_VARIANTS.USER]: 'bg-n-slate-4 text-n-slate-12',
+    '!bg-[#ebb90d] !text-slate-900 [&_.prosemirror-mention-node]:font-semibold shadow-sm',
+  [MESSAGE_VARIANTS.USER]:
+    'bg-white dark:bg-slate-800 text-n-slate-12 shadow-sm border border-slate-200 dark:border-slate-700',
   [MESSAGE_VARIANTS.ACTIVITY]: 'bg-n-alpha-1 text-n-slate-11 text-sm',
-  [MESSAGE_VARIANTS.BOT]: 'bg-n-solid-iris text-n-slate-12',
-  [MESSAGE_VARIANTS.TEMPLATE]: 'bg-n-solid-iris text-n-slate-12',
+  [MESSAGE_VARIANTS.BOT]: '!bg-[#081e2c] !text-white shadow-sm',
+  [MESSAGE_VARIANTS.TEMPLATE]: '!bg-[#081e2c] !text-white shadow-sm',
   [MESSAGE_VARIANTS.ERROR]: 'bg-n-ruby-4 text-n-ruby-12',
   [MESSAGE_VARIANTS.EMAIL]: 'w-full',
   [MESSAGE_VARIANTS.UNSUPPORTED]:

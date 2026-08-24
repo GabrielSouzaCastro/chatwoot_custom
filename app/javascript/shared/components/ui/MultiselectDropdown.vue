@@ -42,6 +42,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  ghost: {
+    type: Boolean,
+    default: false,
+  },
+  alignRight: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['select']);
@@ -82,7 +90,8 @@ const selectedThumbnail = computed(
     <div class="relative w-full mb-2" @keyup.esc="onCloseDropdown">
       <Button
         slate
-        outline
+        :faded="!ghost"
+        :ghost="ghost"
         trailing-icon
         :icon="
           showSearchDropdown ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'
@@ -93,7 +102,10 @@ const selectedThumbnail = computed(
         "
       >
         <div class="flex items-center justify-between w-full min-w-0">
-          <h4 v-if="!hasValue" class="text-sm text-ellipsis text-n-slate-12">
+          <h4
+            v-if="!hasValue"
+            class="text-sm text-ellipsis text-n-slate-11 font-normal"
+          >
             {{ multiselectorPlaceholder }}
           </h4>
           <h4
@@ -139,11 +151,14 @@ const selectedThumbnail = computed(
         />
       </Button>
       <div
-        :class="{
-          'block visible': showSearchDropdown,
-          'hidden invisible': !showSearchDropdown,
-        }"
-        class="box-border top-[2.625rem] w-full border rounded-lg bg-n-alpha-3 backdrop-blur-[100px] absolute shadow-lg border-n-strong dark:border-n-strong p-2 z-[9999]"
+        :class="[
+          {
+            'block visible': showSearchDropdown,
+            'hidden invisible': !showSearchDropdown,
+          },
+          alignRight ? 'ltr:right-0 rtl:left-0 min-w-[240px]' : 'w-full',
+        ]"
+        class="box-border top-[2.625rem] border rounded-lg bg-n-alpha-3 backdrop-blur-[100px] absolute shadow-lg border-n-strong dark:border-n-strong p-2 z-[9999]"
       >
         <div class="flex items-center justify-between mb-1">
           <h4

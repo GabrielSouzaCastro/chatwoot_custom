@@ -228,44 +228,54 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div>
-      <ContactDetailsItem
-        compact
-        :title="$t('CONVERSATION_SIDEBAR.ASSIGNEE_LABEL')"
-      >
-        <template #button>
-          <NextButton
-            v-if="showSelfAssign"
-            link
-            xs
-            icon="i-lucide-arrow-right"
-            class="!gap-1"
-            :label="$t('CONVERSATION_SIDEBAR.SELF_ASSIGN')"
-            @click="onSelfAssign"
-          />
-        </template>
-      </ContactDetailsItem>
-      <MultiselectDropdown
-        :options="agentsList"
-        :selected-item="assignedAgent"
-        :multiselector-title="$t('AGENT_MGMT.MULTI_SELECTOR.TITLE.AGENT')"
-        :multiselector-placeholder="$t('AGENT_MGMT.MULTI_SELECTOR.PLACEHOLDER')"
-        :no-search-result="
-          $t('AGENT_MGMT.MULTI_SELECTOR.SEARCH.NO_RESULTS.AGENT')
-        "
-        :input-placeholder="
-          $t('AGENT_MGMT.MULTI_SELECTOR.SEARCH.PLACEHOLDER.AGENT')
-        "
-        @select="onClickAssignAgent"
-      />
+  <div class="flex flex-col gap-2 mb-4">
+    <div
+      class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-md hover:bg-n-alpha-1 transition-colors cursor-pointer group"
+    >
+      <span class="text-sm font-medium text-n-slate-11">
+        {{ $t('CONVERSATION_SIDEBAR.ASSIGNEE_LABEL') }}
+      </span>
+      <div class="flex items-center gap-1 justify-end">
+        <NextButton
+          v-if="showSelfAssign"
+          link
+          xs
+          icon="i-lucide-arrow-right"
+          class="!gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+          :label="$t('CONVERSATION_SIDEBAR.SELF_ASSIGN')"
+          @click="onSelfAssign"
+        />
+        <MultiselectDropdown
+          ghost
+          align-right
+          class="!mb-0 !w-auto"
+          :options="agentsList"
+          :selected-item="assignedAgent"
+          :multiselector-title="$t('AGENT_MGMT.MULTI_SELECTOR.TITLE.AGENT')"
+          :multiselector-placeholder="
+            $t('AGENT_MGMT.MULTI_SELECTOR.PLACEHOLDER')
+          "
+          :no-search-result="
+            $t('AGENT_MGMT.MULTI_SELECTOR.SEARCH.NO_RESULTS.AGENT')
+          "
+          :input-placeholder="
+            $t('AGENT_MGMT.MULTI_SELECTOR.SEARCH.PLACEHOLDER.AGENT')
+          "
+          @select="onClickAssignAgent"
+        />
+      </div>
     </div>
-    <div>
-      <ContactDetailsItem
-        compact
-        :title="$t('CONVERSATION_SIDEBAR.TEAM_LABEL')"
-      />
+
+    <div
+      class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-md hover:bg-n-alpha-1 transition-colors cursor-pointer group"
+    >
+      <span class="text-sm font-medium text-n-slate-11">
+        {{ $t('CONVERSATION_SIDEBAR.TEAM_LABEL') }}
+      </span>
       <MultiselectDropdown
+        ghost
+        align-right
+        class="!mb-0 !w-auto"
         :options="teamsList"
         :selected-item="assignedTeam"
         show-emoji-icon
@@ -280,9 +290,17 @@ export default {
         @select="onClickAssignTeam"
       />
     </div>
-    <div>
-      <ContactDetailsItem compact :title="$t('CONVERSATION.PRIORITY.TITLE')" />
+
+    <div
+      class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-md hover:bg-n-alpha-1 transition-colors cursor-pointer group"
+    >
+      <span class="text-sm font-medium text-n-slate-11">
+        {{ $t('CONVERSATION.PRIORITY.TITLE') }}
+      </span>
       <MultiselectDropdown
+        ghost
+        align-right
+        class="!mb-0 !w-auto"
         :options="priorityOptions"
         :selected-item="assignedPriority"
         :multiselector-title="$t('CONVERSATION.PRIORITY.TITLE')"
@@ -298,10 +316,6 @@ export default {
         @select="onClickAssignPriority"
       />
     </div>
-    <ContactDetailsItem
-      compact
-      :title="$t('CONVERSATION_SIDEBAR.ACCORDION.CONVERSATION_LABELS')"
-    />
     <ConversationLabels :conversation-id="conversationId" />
   </div>
 </template>

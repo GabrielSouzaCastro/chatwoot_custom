@@ -43,6 +43,50 @@ const emit = defineEmits([
   'closeMobileSidebar',
 ]);
 
+const PORTAL_DOMAINS = {
+  vivareal: 'vivareal.com.br',
+  zap: 'zapimoveis.com.br',
+  zapimoveis: 'zapimoveis.com.br',
+  'zap-imoveis': 'zapimoveis.com.br',
+  imovelweb: 'imovelweb.com.br',
+  chavesnamao: 'chavesnamao.com.br',
+  'chaves-na-mao': 'chavesnamao.com.br',
+  quintoandar: 'quintoandar.com.br',
+  olx: 'olx.com.br',
+  mercadolivre: 'mercadolivre.com.br',
+  wimoveis: 'wimoveis.com.br',
+  trafego: 'meta.com',
+  whatsapp: 'whatsapp.com',
+  casamineira: 'casamineira.com.br',
+  'casa-mineira': 'casamineira.com.br',
+  dfimoveis: 'dfimoveis.com.br',
+  lugarcerto: 'lugarcerto.com.br',
+  agenteimovel: 'agenteimovel.com.br',
+  dreamcasa: 'dreamcasa.com.br',
+  '123i': '123i.com.br',
+  moving: 'moving.com.br',
+  kenlo: 'kenlo.com.br',
+  ingaia: 'ingaia.com.br',
+  vista: 'vistasoft.com.br',
+  universal: 'universalsoftware.com.br',
+  imoview: 'imoview.com.br',
+  facilita: 'appfacilita.com',
+  arbo: 'arboimoveis.com.br',
+  rdstation: 'rdstation.com',
+  instagram: 'instagram.com',
+  google: 'google.com',
+  googleads: 'ads.google.com',
+  tiktok: 'tiktok.com',
+  youtube: 'youtube.com',
+  linkedin: 'linkedin.com',
+};
+
+const getPortalDomain = title => {
+  if (!title) return null;
+  const key = title.toLowerCase().trim();
+  return PORTAL_DOMAINS[key] || null;
+};
+
 const { accountScopedRoute, isOnChatwootCloud } = useAccount();
 const { isEnterprise } = useConfig();
 const store = useStore();
@@ -477,114 +521,40 @@ const menuItems = computed(() => {
           ...buildSortConfig(SIDEBAR_SORT_SECTIONS.LABELS),
           collapsible: true,
           showTreeLine: true,
-          children: sortedLabels.value.map(label => ({
-            name: `${label.title}-${label.id}`,
-            label: label.title,
-            badgeCount: getLabelUnreadCount.value(label.id),
-            icon: h('span', {
-              class: `size-[8px] rounded-sm`,
-              style: { backgroundColor: label.color },
-            }),
-            to: accountScopedRoute('label_conversations', {
+          children: sortedLabels.value.map(label => {
+            const portalDomain = getPortalDomain(label.title);
+            const isSite =
+              label.title && label.title.toLowerCase().trim() === 'site';
+
+            let iconRenderer;
+            if (portalDomain) {
+              iconRenderer = h('img', {
+                src: `https://www.google.com/s2/favicons?domain=${portalDomain}&sz=64`,
+                class: 'size-[12px] rounded-sm object-contain',
+              });
+            } else if (isSite) {
+              iconRenderer = 'i-lucide-globe';
+            } else {
+              iconRenderer = h('span', {
+                class: `size-[8px] rounded-sm`,
+                style: { backgroundColor: label.color },
+              });
+            }
+
+            return {
+              name: `${label.title}-${label.id}`,
               label: label.title,
-            }),
-          })),
-        },
-      ],
-    },
-    {
-      name: 'Captain',
-      icon: 'i-woot-captain',
-      label: t('SIDEBAR.CAPTAIN'),
-      activeOn: ['captain_assistants_create_index'],
-      children: [
-        {
-          name: 'Overview',
-          label: t('SIDEBAR.CAPTAIN_OVERVIEW'),
-          activeOn: ['captain_assistants_overview_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_overview_index',
-          }),
-        },
-        {
-          name: 'FAQs',
-          label: t('SIDEBAR.CAPTAIN_RESPONSES'),
-          activeOn: [
-            'captain_assistants_responses_index',
-            'captain_assistants_faq_suggestions',
-          ],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_responses_index',
-          }),
-        },
-        {
-          name: 'Documents',
-          label: t('SIDEBAR.CAPTAIN_DOCUMENTS'),
-          activeOn: ['captain_assistants_documents_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_documents_index',
-          }),
-        },
-        {
-          name: 'Scenarios',
-          label: t('SIDEBAR.CAPTAIN_SCENARIOS'),
-          activeOn: ['captain_assistants_scenarios_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_scenarios_index',
-          }),
-        },
-        {
-          name: 'Playground',
-          label: t('SIDEBAR.CAPTAIN_PLAYGROUND'),
-          activeOn: ['captain_assistants_playground_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_playground_index',
-          }),
-        },
-        {
-          name: 'Inboxes',
-          label: t('SIDEBAR.CAPTAIN_INBOXES'),
-          activeOn: ['captain_assistants_inboxes_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_inboxes_index',
-          }),
-        },
-        {
-          name: 'Tools',
-          label: t('SIDEBAR.CAPTAIN_TOOLS'),
-          activeOn: ['captain_tools_index'],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_tools_index',
-          }),
-        },
-        {
-          name: 'Settings',
-          label: t('SIDEBAR.CAPTAIN_SETTINGS'),
-          activeOn: [
-            'captain_assistants_settings_index',
-            'captain_assistants_settings_system_index',
-            'captain_assistants_settings_audience_index',
-            'captain_assistants_settings_schedule_index',
-            'captain_assistants_guidelines_index',
-            'captain_assistants_guardrails_index',
-          ],
-          to: accountScopedRoute('captain_assistants_index', {
-            navigationPath: 'captain_assistants_settings_index',
+              badgeCount: getLabelUnreadCount.value(label.id),
+              icon: iconRenderer,
+              to: accountScopedRoute('label_conversations', {
+                label: label.title,
+              }),
+            };
           }),
         },
       ],
     },
-    ...(isCallsAvailable.value
-      ? [
-          {
-            name: 'Calls',
-            label: t('SIDEBAR.CALLS'),
-            icon: 'i-lucide-phone',
-            to: accountScopedRoute('calls_dashboard_index'),
-            activeOn: ['calls_dashboard_index'],
-          },
-        ]
-      : []),
+
     {
       name: 'Contacts',
       label: t('SIDEBAR.CONTACTS'),
@@ -955,7 +925,7 @@ const menuItems = computed(() => {
         ],
       },
     ]"
-    class="bg-n-background flex flex-col text-sm pb-px fixed top-0 ltr:left-0 rtl:right-0 h-full z-40 w-[200px] md:w-auto md:relative md:flex-shrink-0 md:ltr:translate-x-0 md:rtl:translate-x-0 ltr:border-r rtl:border-l border-n-weak"
+    class="sidebar-brand bg-n-background flex flex-col text-sm pb-px fixed top-0 ltr:left-0 rtl:right-0 h-full z-40 w-[200px] md:w-auto md:relative md:flex-shrink-0 md:ltr:translate-x-0 md:rtl:translate-x-0 ltr:border-r rtl:border-l border-n-weak"
     :class="[
       {
         'shadow-lg md:shadow-none': isMobileSidebarOpen,
@@ -971,26 +941,42 @@ const menuItems = computed(() => {
       :class="isEffectivelyCollapsed ? 'mt-3 mb-6 gap-4' : 'mt-1 mb-4 gap-2'"
     >
       <div
-        class="flex gap-2 items-center min-w-0"
+        class="flex gap-2 min-w-0"
         :class="{
-          'justify-center px-1': isEffectivelyCollapsed,
-          'px-2': !isEffectivelyCollapsed,
+          'flex-col items-center px-1': isEffectivelyCollapsed,
+          'items-center px-2 justify-between': !isEffectivelyCollapsed,
         }"
       >
         <template v-if="isEffectivelyCollapsed">
+          <Button
+            icon="i-lucide-panel-left-open"
+            color="slate"
+            size="sm"
+            class="flex flex-shrink-0 dark:hover:!bg-n-slate-9/30 !size-8 !outline-n-weak !text-n-slate-11"
+            @click="onResizeHandleDoubleClick"
+          />
           <SidebarAccountSwitcher
             is-collapsed
             @show-create-account-modal="emit('showCreateAccountModal')"
           />
         </template>
         <template v-else>
-          <div class="grid flex-shrink-0 place-content-center size-6">
-            <Logo class="size-4" />
+          <div class="flex gap-2 items-center flex-grow min-w-0">
+            <div class="grid flex-shrink-0 place-content-center size-6">
+              <Logo class="size-4" />
+            </div>
+            <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
+            <SidebarAccountSwitcher
+              class="flex-grow -mx-1 min-w-0"
+              @show-create-account-modal="emit('showCreateAccountModal')"
+            />
           </div>
-          <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
-          <SidebarAccountSwitcher
-            class="flex-grow -mx-1 min-w-0"
-            @show-create-account-modal="emit('showCreateAccountModal')"
+          <Button
+            icon="i-lucide-panel-left-close"
+            color="slate"
+            size="sm"
+            class="flex flex-shrink-0 dark:hover:!bg-n-slate-9/30 !h-7 !px-1.5 !outline-n-weak !text-n-slate-11"
+            @click="onResizeHandleDoubleClick"
           />
         </template>
       </div>
@@ -1001,7 +987,7 @@ const menuItems = computed(() => {
         <RouterLink
           v-if="!isEffectivelyCollapsed"
           :to="{ name: 'search' }"
-          class="flex gap-2 items-center px-2 py-1 w-full h-7 rounded-lg outline outline-1 outline-n-weak bg-n-button-color transition-all duration-100 ease-out"
+          class="flex gap-2 items-center px-2 py-1 flex-1 min-w-0 h-7 rounded-lg outline outline-1 outline-n-weak bg-n-button-color transition-all duration-100 ease-out"
         >
           <span class="flex-shrink-0 i-lucide-search size-4 text-n-slate-10" />
           <span class="flex-grow text-start text-n-slate-10">
@@ -1058,7 +1044,7 @@ const menuItems = computed(() => {
       class="flex relative flex-col flex-shrink-0 gap-1 justify-between items-center"
     >
       <div
-        class="pointer-events-none absolute inset-x-0 -top-[1.938rem] h-8 bg-gradient-to-t from-n-background to-transparent"
+        class="pointer-events-none absolute inset-x-0 -top-[1.938rem] h-8 bg-gradient-to-t from-[#081e2c] to-transparent"
       />
       <SidebarChangelogCard
         v-if="

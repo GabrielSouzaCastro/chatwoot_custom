@@ -178,7 +178,7 @@ export default {
 </script>
 
 <template>
-  <div class="relative items-center w-full p-4">
+  <div class="relative items-center w-full p-4 border-b border-solid border-n-weak">
     <div class="flex flex-col w-full gap-2 text-left rtl:text-right">
       <div class="flex flex-row justify-between">
         <Avatar
@@ -280,22 +280,6 @@ export default {
             :title="$t('CONTACT_PANEL.IDENTIFIER')"
           />
           <ContactInfoRow
-            :value="additionalAttributes.company_name"
-            icon="building-bank"
-            emoji="🏢"
-            :title="$t('CONTACT_PANEL.COMPANY')"
-            editable
-            @update="
-              value =>
-                updateContactField({
-                  additional_attributes: {
-                    ...additionalAttributes,
-                    company_name: value,
-                  },
-                })
-            "
-          />
-          <ContactInfoRow
             v-if="location || additionalAttributes.location"
             :value="location || additionalAttributes.location"
             icon="map"
@@ -305,7 +289,7 @@ export default {
           <SocialIcons :social-profiles="socialProfiles" />
         </div>
       </div>
-      <div class="flex items-center w-full mt-0.5 gap-2">
+      <div class="hidden items-center w-full mt-0.5 gap-2">
         <ComposeConversation :contact-id="String(contact.id)">
           <template #trigger>
             <NextButton

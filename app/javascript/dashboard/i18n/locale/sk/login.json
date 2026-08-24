@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Login to Chatwoot",
+    "TITLE": "Acessar a ImoBIA",
     "EMAIL": {
       "LABEL": "Email",
       "PLACEHOLDER": "example{'@'}companyname.com",
@@ -20,7 +20,7 @@
       "BUSINESS_ACCOUNTS_ONLY": "Please use your company email address to login",
       "NO_ACCOUNT_FOUND": "We couldn't find an account for your email address."
     },
-    "FORGOT_PASSWORD": "Forgot your password?",
+    "FORGOT_PASSWORD": "Esqueceu sua senha?",
     "CREATE_NEW_ACCOUNT": "Create new account",
     "SUBMIT": "Prihlásenie",
     "SAML": {

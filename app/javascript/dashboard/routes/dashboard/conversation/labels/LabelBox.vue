@@ -86,37 +86,45 @@ export default {
     >
       <div
         v-on-clickaway="closeDropdownLabel"
-        class="label-wrap flex flex-wrap"
+        class="relative"
         @keyup.esc="closeDropdownLabel"
       >
-        <AddLabel @add="toggleLabels" />
-        <woot-label
-          v-for="label in activeLabels"
-          :key="label.id"
-          :title="label.title"
-          :description="label.description"
-          show-close
-          :color="label.color"
-          variant="smooth"
-          class="max-w-[calc(100%-0.5rem)]"
-          @remove="removeLabelFromConversation"
-        />
+        <div class="flex items-center justify-between py-1 mb-2">
+          <span class="text-sm font-medium text-n-slate-11">
+            {{ $t('CONVERSATION_SIDEBAR.ACCORDION.CONVERSATION_LABELS') }}
+          </span>
+          <AddLabel ghost icon-only class="flex-shrink-0" @add="toggleLabels" />
+        </div>
 
-        <div
-          :class="{
-            'block visible': showSearchDropdownLabel,
-            'hidden invisible': !showSearchDropdownLabel,
-          }"
-          class="border rounded-lg bg-n-alpha-3 top-6 backdrop-blur-[100px] absolute w-full shadow-lg border-n-strong dark:border-n-strong p-2 box-border z-[9999]"
-        >
-          <LabelDropdown
-            v-if="showSearchDropdownLabel"
-            :account-labels="accountLabels"
-            :selected-labels="savedLabels"
-            :allow-creation="isAdmin"
-            @add="addLabelToConversation"
+        <div class="label-wrap flex flex-wrap gap-1">
+          <woot-label
+            v-for="label in activeLabels"
+            :key="label.id"
+            :title="label.title"
+            :description="label.description"
+            show-close
+            :color="label.color"
+            variant="smooth"
+            class="max-w-[calc(100%-0.5rem)]"
             @remove="removeLabelFromConversation"
           />
+
+          <div
+            :class="{
+              'block visible': showSearchDropdownLabel,
+              'hidden invisible': !showSearchDropdownLabel,
+            }"
+            class="border rounded-lg bg-n-alpha-3 top-8 ltr:right-0 rtl:left-0 backdrop-blur-[100px] absolute w-[240px] shadow-lg border-n-strong dark:border-n-strong p-2 box-border z-[9999]"
+          >
+            <LabelDropdown
+              v-if="showSearchDropdownLabel"
+              :account-labels="accountLabels"
+              :selected-labels="savedLabels"
+              :allow-creation="isAdmin"
+              @add="addLabelToConversation"
+              @remove="removeLabelFromConversation"
+            />
+          </div>
         </div>
       </div>
     </div>
